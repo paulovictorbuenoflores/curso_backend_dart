@@ -79,11 +79,6 @@ class SecurityServiceImp implements SecurityService<JWT> {
   @override
   Middleware get verifyJwt => createMiddleware(
         requestHandler: (Request req) {
-          //verifica se o path passado esta dentro da nossas APIs publicas livre acesso
-          var _apiSecurity = ApiRouterValidate().add('login').add('register');
-
-          if (_apiSecurity.isPublic(req.url.path)) return null;
-
           //verificar se no contexto da nossa requisicao existe o JWT && se ele é diferente de nulo
           if (req.context['jwt'] == null) {
             return Response.forbidden('Acesso Não Autorizado!');

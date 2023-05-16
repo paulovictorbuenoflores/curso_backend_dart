@@ -13,8 +13,11 @@ void main() async {
   // CustomEnv.fromFile('.env-dev');
   SecurityService _securityService = SecurityServiceImp();
   var cascadeHandler = Cascade()
-      .add(LoginApi(SecurityServiceImp())
-          .handler) //precisa saber quem ta implementando o cara do contrato security
+      .add(LoginApi(_securityService).getHandler(middlewares: [
+        createMiddleware(requestHandler: (Request req) {
+          print('Log -> ${req.url}');
+        })
+      ])) //precisa saber quem ta implementando o cara do contrato security
       .add(BlogApi(NoticiaService()).handler)
       .handler;
 
