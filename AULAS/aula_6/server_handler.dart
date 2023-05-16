@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:shelf/shelf.dart';
 import 'package:shelf_router/shelf_router.dart'; //o shelf_rout traz de forma mais amigavel e simplificada a criacao de rotas
 
@@ -17,12 +19,12 @@ class ServeHandler {
       return Response(200, body: 'Primeira Rota');
     });
 
-// http://localhost:8080/ola/mundo
-//agora tenho o path: ola/mundo
+    //http://localhost:8080/ola/mundo
+    //agora tenho o path: ola/mundo
     router.get('/ola/mundo', (Request req) {
       return Response.ok("Ola mundo");
     });
-// como passar informacao pelo path
+    // como passar informacao pelo path
     router.get('/ola/mundo/nome/<usuario>', (Request req, String usuario) {
       return Response.ok("Ola mundo $usuario");
     });
@@ -45,6 +47,32 @@ class ServeHandler {
       return Response.ok('Query eh: $nome,$idade');
     });
 
+    //////////////////// aula 6 falaremos sobre o metodo post //////////////////////////
+//usamos o post toda vez que queremos que as informacoes seja trafegadas de foma privada, ou seja, é um pouco mais seguro que o metodo Get
+    router.post('/login', (Request req) async {
+      var result = await req.readAsString();
+      Map json = jsonDecode(result);
+
+      var usuario = json['usuario'];
+      var senha = json['senha'];
+      //se usuario == admin e senha 123
+      if (usuario == 'admin' && senha == '123') {
+        return Response.ok('Bem vindo $usuario');
+      } else {
+        return Response.forbidden('Acesso Negado!!!');
+      }
+
+      //acima vemos como enviar informacoes atraves do metodo post, decifra ela atraves do metodo json decoder, json para Map, Map para json
+    });
+
     return router;
   }
 }
+
+/*
+O navegador só consegue tratar rotas do tipo Get.
+para testar nossa API com metodo Post   usaremos o PostMan, os dados enviados esta no formato Json, este formato é parecido com umapa, chave:valor.
+
+Sobre o PostMan: É uma ferramenta com uma serie de funcionalidades, para testar e trabalhar com APIs, consegue fazer mocks de servidores, consegue monitorar requisicoes, fazer teste automatizados
+Postman é uma das ferramentas mais usadas em qualquer empresa.
+*/

@@ -1,0 +1,8 @@
+Na aula de hoje iniciamos o nosso projeto!
+    sobre o projeto.
+        - veremos tudo que ja vemos nas aulas anteriores.
+        - criacao de jw_Token
+        - Integracao com o banco de dados
+        - No futuro vomos consumir esse backend atraves do frontend
+        - Publicacao na WS ...
+        - Padroes de backend

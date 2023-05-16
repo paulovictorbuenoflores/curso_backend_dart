@@ -1,0 +1,6 @@
+Oque é a camada de servico?
+A camada de servico em aplicacoes backend, pode ser  encontrada 
+como a camada que cuidade e faz a orquestracao das nossas regras 
+de negocio
+
+- No futuro essa camada de servico vai interagir com outra camada que trata o banco de dados.
