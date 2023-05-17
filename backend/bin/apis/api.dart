@@ -5,7 +5,10 @@ import '../infra/security/security_service.dart';
 import '../infra/security/security_service_imp.dart';
 
 abstract class Api {
-  Handler getHandler({List<Middleware>? middlewares, bool isSecurity = false});
+  Handler getHandler({
+    List<Middleware>? middlewares,
+    bool isSecurity = false,
+  });
 
   //esse metodo vai devolver um handler
   Handler createHandler({
@@ -13,10 +16,15 @@ abstract class Api {
     List<Middleware>? middlewares,
     bool isSecurity = false,
   }) {
-    final _di = DependencyInjector();
-    var _securityService = _di.get<SecurityService>();
-
     middlewares ??= [];
+    if (isSecurity) {
+      var _securityService = DependencyInjector().get<SecurityService>();
+      middlewares.addAll([
+        _securityService.authorization,
+        _securityService.verifyJwt,
+      ]);
+    }
+
     var pipeline = Pipeline();
 
     middlewares.forEach((m) => pipeline = pipeline.addMiddleware(m));

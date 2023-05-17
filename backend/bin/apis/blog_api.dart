@@ -17,7 +17,10 @@ class BlogApi extends Api {
   );
 
   @override
-  Handler getHandler({List<Middleware>? middlewares, bool isSecurity = false}) {
+  Handler getHandler({
+    List<Middleware>? middlewares,
+    bool isSecurity = false,
+  }) {
     Router router = Router();
 
     //abaixo teremos os end-point

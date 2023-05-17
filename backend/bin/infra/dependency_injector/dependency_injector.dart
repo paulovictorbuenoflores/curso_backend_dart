@@ -16,7 +16,7 @@ class DependencyInjector {
 
 //registrar as nossas instancias, objetos.
   void register<T extends Object>(InstanceCreator<T> instance,
-          {bool isSingleton = false}) =>
+          {bool isSingleton = true}) =>
       _instanceMap[T] = _InstanceGenerator(instance, isSingleton);
 
 //get para devolver a nossa instancia
