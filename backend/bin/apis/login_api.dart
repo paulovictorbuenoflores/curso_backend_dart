@@ -14,27 +14,10 @@ class LoginApi extends Api {
 
   LoginApi(this._securityService);
 
-/*
-  Handler get handler {
-    Router router = Router();
-
-    router.post('/login', (Request req) async {
-      // return Response.ok('API de Login');
-      var token = await _securityService.generateJWT('1');
-      var result = await _securityService.validateJWT(token);
-
-      //return Response.ok((result != null).toString());
-      return Response.ok(token);
-    });
-
-    return router;
-  }
-
-*/
-
   @override
   Handler getHandler({
     List<Middleware>? middlewares,
+    bool isSecurity = false,
   }) {
     Router router = Router();
 

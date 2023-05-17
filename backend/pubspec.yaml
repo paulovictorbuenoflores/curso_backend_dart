@@ -18,5 +18,5 @@ dependencies:
   # shelf router disponibiliza uma serie de recursos para trabalhar com nossos metodos http
   shelf_router: ^1.1.4 
 
-  #vai grar no JWT, faz a assinatura, faz a verificacao se o jwt é valido ou não
+  #faz 3 coisas, vai grar no JWT, faz a assinatura, faz a verificacao se o jwt é valido ou não
   dart_jsonwebtoken: ^2.7.1

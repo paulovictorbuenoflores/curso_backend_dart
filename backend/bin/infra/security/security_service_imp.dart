@@ -1,5 +1,4 @@
 import 'package:shelf/shelf.dart';
-import 'validate/api_router_validade.dart';
 
 import '../../utils/custom_env.dart';
 import 'security_service.dart';
@@ -23,6 +22,7 @@ class SecurityServiceImp implements SecurityService<JWT> {
     return token;
   }
 
+//validar o token
   @override
   Future<JWT?> validateJWT(String token) async {
     String key = await CustomEnv.get(key: 'jwt_key');
@@ -46,6 +46,7 @@ class SecurityServiceImp implements SecurityService<JWT> {
     }
   }
 
+////////////////////////os 2 metodos (middleware) authorization e verifyJwt vai verifica api se ta autorizada //////////////////////////////////////////////////
 //como criar um Middleware,  o middleware ele pega o Handler do usuario, nesse hendler tem  o request, tem um response e tem o erro hendler
 // so que dentro do handler trabalharemos o request, ou seja, vamos modificar ele, e colocar ele de volta dentro da handler, e deixar ele processar e seguir o fluxo normal
   @override
@@ -78,6 +79,8 @@ class SecurityServiceImp implements SecurityService<JWT> {
 //verifica se o nosso JWT é valido se está no contexto do usuario para ai sim poder liberar a passagem para nossa as APIs
   @override
   Middleware get verifyJwt => createMiddleware(
+        //validar o token e verificar se ta no contexto do nosso handler
+
         requestHandler: (Request req) {
           //verificar se no contexto da nossa requisicao existe o JWT && se ele é diferente de nulo
           if (req.context['jwt'] == null) {
