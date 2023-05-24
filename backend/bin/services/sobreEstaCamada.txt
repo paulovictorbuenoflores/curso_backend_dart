@@ -4,3 +4,5 @@ como a camada que cuidade e faz a orquestracao das nossas regras
 de negocio
 
 - No futuro essa camada de servico vai interagir com outra camada que trata o banco de dados.
+
+- A camada de servico onde faz o meio de campo entre a camada de apis e o nosso model 

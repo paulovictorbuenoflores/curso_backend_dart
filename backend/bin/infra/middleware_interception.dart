@@ -1,7 +1,7 @@
 import 'package:shelf/shelf.dart';
 //vamos trabalhar com json em nossa aplicacao, para isso vomos criar esse middleware que intercepta de forma global, para converter em json
 
-//o middleware nada mais é que uma classe que intercepta nassa requisicao ou nosso response, e execulta determinada tarefa
+//o middleware nada mais é que uma classe que intercepta nossa requisicao ou nosso response, e execulta determinada tarefa
 class MiddlewareInterception {
   Middleware get middleware => createMiddleware(
         responseHandler: (Response res) => res.change(

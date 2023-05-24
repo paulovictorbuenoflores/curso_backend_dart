@@ -25,6 +25,9 @@ class DependencyInjector {
     if (instance != null && instance is T) return instance;
     throw Exception('[ERROR] -> Instance ${T.toString()} not found');
   }
+
+  //interface calebol
+  call<T extends Object>() => get<T>();
 }
 
 //classe privada tem a responsabilidade, pegar nossa instancia, faz uma logica, e devolve a instancia do objeto fabricada

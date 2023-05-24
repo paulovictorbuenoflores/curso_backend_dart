@@ -31,6 +31,9 @@ class LoginApi extends Api {
     });
 
     return createHandler(
-        router: router, isSecurity: isSecurity, middlewares: middlewares);
+      router: router,
+      isSecurity: isSecurity,
+      middlewares: middlewares,
+    );
   }
 }
