@@ -27,8 +27,8 @@ class BlogApi extends Api {
 
     //router.get é o metodo endpoint que vamos fazer a listagem
     //listagem
-    router.get('/blog/noticias', (Request req) {
-      List<NoticiaModel> noticias = _service.findAll();
+    router.get('/blog/noticias', (Request req) async {
+      List<NoticiaModel> noticias = await _service.findAll();
       List<Map> noticiasMap = noticias.map((e) => e.toJson()).toList();
       return Response.ok(jsonEncode(noticiasMap));
     });

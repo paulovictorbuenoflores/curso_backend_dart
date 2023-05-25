@@ -1,0 +1,9 @@
+Oque é o DAO?
+Surgiu com a necessidade de separarmos a logica de negocios da logica de persistencia de dados.
+Esse padrao permite que possamos mudar a forma de persistencia sem que isso influencie em nada
+na logica de negocio, alem de tronar nossas classes mais legiveis.
+Casses DAO são responsaveis por trocar informcoes com o SGBD e fornecer operacoes CRUD e de
+pesquisas, elas devem ser capcazes de buscar dados no banco e transformar esses objetos ou 
+lista de objetos, fazendo uso de listas genericas,  tambem deverao receber os objetos, converter
+em instrucoes SQL e mandar para o banco de dados.
+Mas atualmente é usado outro padrao o repository

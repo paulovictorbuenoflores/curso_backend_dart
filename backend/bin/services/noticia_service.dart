@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import '../models/noticia_model.dart';
 import 'generic_service.dart';
 import '../utils/list_extension.dart';
@@ -5,23 +7,18 @@ import '../utils/list_extension.dart';
 class NoticiaService implements GenericService<NoticiaModel> {
   final List<NoticiaModel> _fakeDB = [];
   @override
-  bool delete(int id) {
+  Future<bool> delete(int id) async {
     _fakeDB.removeWhere((e) => e.id == id);
     return true;
   }
 
   @override
-  List<NoticiaModel> findAll() {
+  Future<List<NoticiaModel>> findAll() async {
     return [..._fakeDB];
   }
 
   @override
-  findOne(int id) {
-    return _fakeDB.firstWhere((element) => element.id == id);
-  }
-
-  @override
-  bool save(value) {
+  Future<bool> save(value) async {
     NoticiaModel? model = _fakeDB.firstWhereOrNull(
       (e) => e.id == value.id,
     );
@@ -33,5 +30,10 @@ class NoticiaService implements GenericService<NoticiaModel> {
     }
 
     return true;
+  }
+
+  @override
+  Future<NoticiaModel> findOne(int id) async {
+    return _fakeDB.firstWhere((element) => element.id == id);
   }
 }
