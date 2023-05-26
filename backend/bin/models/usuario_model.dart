@@ -19,11 +19,6 @@ class UsuarioModel {
     this.dtUpdated,
   );
 
-  @override
-  String toString() {
-    return 'UsuarioModel(id: $id, nome: $nome, email: $email, isActived: $isActived, dtCreated: $dtCreated, dtUpdated: $dtUpdated)';
-  }
-
   factory UsuarioModel.fromMap(Map<String, dynamic> map) {
     return UsuarioModel.create(
       map['id'] != null ? map['id'] as int : null,
@@ -34,7 +29,19 @@ class UsuarioModel {
       map['dt_autalizacao'],
     );
   }
+//retornando o proprio objeto varias vezes inserindo o valor nome, retornando o usuario para  inserindo email, ..password, o nome desse padrao é builder
+  factory UsuarioModel.fromRequest(Map map) {
+    return UsuarioModel()
+      ..nome = map['name']
+      ..email = map['email']
+      ..password = map['password'];
+  }
 
   factory UsuarioModel.fromJson(String source) =>
       UsuarioModel.fromMap(json.decode(source) as Map<String, dynamic>);
+
+  @override
+  String toString() {
+    return 'UsuarioModel(id: $id, nome: $nome, email: $email, isActived: $isActived, dtCreated: $dtCreated, dtUpdated: $dtUpdated)';
+  }
 }

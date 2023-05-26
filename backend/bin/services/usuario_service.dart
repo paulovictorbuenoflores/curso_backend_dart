@@ -7,32 +7,21 @@ class UsuarioService implements GenericService<UsuarioModel> {
   UsuarioService(this._usuarioDAO);
 
   @override
-  Future<bool> delete(int id) {
-    // TODO: implement delete
-    throw UnimplementedError();
-  }
+  Future<bool> delete(int id) async => await _usuarioDAO.delete(id);
 
   @override
-  Future<List<UsuarioModel>> findAll() {
-    // TODO: implement findAll
-    throw UnimplementedError();
-  }
+  Future<List<UsuarioModel>> findAll() async => await _usuarioDAO.findAll();
 
   @override
-  Future<UsuarioModel> findOne(int id) {
-    // TODO: implement findOne
-    throw UnimplementedError();
-  }
+  Future<UsuarioModel?> findOne(int id) async => await _usuarioDAO.findOne(id);
 
   @override
-  Future<bool> save(UsuarioModel value) {
+  Future<bool> save(UsuarioModel value) async {
     //como sei se ta criando ou atualizando usuario? pelo id, usuario novo nunca tem id
     if (value.id != null) {
-      _usuarioDAO.create(value);
+      return _usuarioDAO.update(value);
     } else {
-      _usuarioDAO.update(value);
+      return _usuarioDAO.create(value);
     }
-
-    throw UnimplementedError();
   }
 }
