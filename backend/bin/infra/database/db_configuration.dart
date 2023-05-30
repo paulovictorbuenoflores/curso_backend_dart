@@ -4,4 +4,6 @@ abstract class DBConfiguration {
 
   //get conexao aberta conexao ja configurada
   Future<dynamic> get connection;
+
+  execQuery(String sql, [List? params]);
 }

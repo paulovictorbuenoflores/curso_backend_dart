@@ -1,6 +1,7 @@
 import 'package:mysql1/mysql1.dart';
+import 'package:password_dart/password_dart.dart';
 import 'package:shelf/shelf.dart';
-import 'apis/blog_api.dart';
+import 'apis/noticias_api.dart';
 import 'apis/login_api.dart';
 import 'apis/usuario_api.dart';
 import 'dao/usuario_dao.dart';
@@ -15,6 +16,11 @@ import 'utils/custom_env.dart';
 void main() async {
   // CustomEnv.fromFile('.env-dev');
 
+  /* var result = Password.hash('12345678A', PBKDF2());
+  print(result);
+  bool r = Password.verify('12345678a', result);
+  print(r);*/
+
 //container que injeta minhas instancias
   final _di = Injects.initialized();
 
@@ -23,15 +29,17 @@ void main() async {
       .add(
         _di.get<LoginApi>().getHandler(isSecurity: false),
       ) //precisa saber quem ta implementando o cara do contrato security
-      .add(_di.get<BlogApi>().getHandler(isSecurity: true))
+      .add(_di.get<NoticiasApi>().getHandler(isSecurity: true))
       .add(_di.get<UsuarioApi>().getHandler(isSecurity: true))
       .handler;
 
 //junta middleware e uma cascata de handler (um handler)
   var handler = Pipeline()
       .addMiddleware(logRequests()) //global Middlewares
-      .addMiddleware(MiddlewareInterception()
-          .middleware) //global Middlewares para transformar os arquivos devolvidos em json
+      //global Middlewares para transformar os arquivos devolvidos em json
+      .addMiddleware(MInterception.contentTypeJson) //global Middlewares
+      //middleware do CORS
+      .addMiddleware(MInterception.cors) //global Middlewares
       .addHandler(cascadeHandler);
 
 //passo para o servidor mmeus handles e os middlewares de seguranca

@@ -1,37 +1,49 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
+import 'dart:convert';
+
 class NoticiaModel {
-  final int? id;
-  final String titulo;
-  final String descricao;
-  final String imagem;
-  final DateTime dtPublicacao;
-  final DateTime? dtAtualizacao;
+  int? id;
+  String? titulo;
+  String? descricao;
+  DateTime? dtCreated;
+  DateTime? dtUpdate;
+  int? userId;
 
-  NoticiaModel(this.id, this.titulo, this.descricao, this.imagem,
-      this.dtPublicacao, this.dtAtualizacao);
-
-  factory NoticiaModel.fromJson(Map map) {
-    return NoticiaModel(
-      map['id'] ?? '',
-      map['titulo'],
-      map['descricao'],
-      map['imagem'],
-      DateTime.fromMillisecondsSinceEpoch(map['dtPublicacao']),
-      map['dtAtualizacao'] != null
-          ? DateTime.fromMillisecondsSinceEpoch(map['dtAtualizacao'])
-          : null,
-    );
+  NoticiaModel();
+  NoticiaModel.create(
+    this.id,
+    this.titulo,
+    this.descricao,
+    this.dtCreated,
+    this.dtUpdate,
+    this.userId,
+  );
+//map['dtCreated'] != null ? DateTime.fromMillisecondsSinceEpoch(map['dtCreated'] as int) : null,
+  factory NoticiaModel.fromMap(Map map) {
+    return NoticiaModel()
+      ..id = map['id']?.toInt()
+      ..titulo = map['titulo']
+      ..descricao = map['descricao'].toString()
+      ..dtCreated = map['dt_criacao']
+      ..dtUpdate = map['dt_autalizacao']
+      ..userId = map['id_usuario']?.toInt();
   }
+  factory NoticiaModel.fromJson(String source) =>
+      NoticiaModel.fromMap(json.decode(source) as Map<String, dynamic>);
   Map toJson() {
-    return {
-      'id': id,
-      'titulo': titulo,
-      'descricao': descricao,
-      'imagem': imagem
-    };
+    return {'id': id, 'titulo': titulo, 'descricao': descricao};
+  }
+
+  factory NoticiaModel.fromRequest(Map map) {
+    return NoticiaModel()
+      ..id = map['id']?.toInt()
+      ..titulo = map['titulo']
+      ..descricao = map['descricao']
+      ..userId = map['id_usuario']?.toInt();
   }
 
   @override
   String toString() {
-    return 'NoticiaModel(id:$id, titulo: $titulo, descricao:$descricao, imagem:$imagem, dtPublicacao:$dtPublicacao, dtAtualizacao:$dtAtualizacao)';
+    return 'NoticiaModel(id: $id, titulo: $titulo, descricao: $descricao, dtCreated: $dtCreated, dtUpdate: $dtUpdate, userId: $userId)';
   }
 }

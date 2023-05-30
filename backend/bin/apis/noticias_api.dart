@@ -9,10 +9,10 @@ import '../services/noticia_service.dart';
 import 'api.dart';
 
 //api rest full trabalhando com retorno da informacao
-class BlogApi extends Api {
+class NoticiasApi extends Api {
 //inversao do controle de dependencia 5 principio do solid
   final GenericService<NoticiaModel> _service;
-  BlogApi(
+  NoticiasApi(
     this._service,
   );
 
@@ -27,33 +27,47 @@ class BlogApi extends Api {
 
     //router.get é o metodo endpoint que vamos fazer a listagem
     //listagem
-    router.get('/blog/noticias', (Request req) async {
+    //http://localhost:8080/noticia?id=2
+    router.get('/noticia', (Request req) async {
+      String? id = await req.url.queryParameters['id'];
+      if (id == null) return Response(400);
+
+      var noticia = await _service.findOne(int.parse(id));
+      if (noticia == null) return Response(400);
+
+      return Response.ok(jsonEncode(noticia.toJson()));
+    });
+    router.get('/noticias', (Request req) async {
       List<NoticiaModel> noticias = await _service.findAll();
       List<Map> noticiasMap = noticias.map((e) => e.toJson()).toList();
       return Response.ok(jsonEncode(noticiasMap));
     });
 
     //nova notificacao
-    router.post('/blog/noticias', (Request req) async {
+    router.post('/noticias', (Request req) async {
       var body = await req.readAsString();
-      _service.save(NoticiaModel.fromJson(jsonDecode(body)));
-      return Response(201);
+      var result =
+          await _service.save(NoticiaModel.fromRequest(jsonDecode(body)));
+      return result ? Response(201) : Response(500);
     });
 
     //update- com query param: ?id=1?id=1
     // /blog/noticias?id=1
-    router.put('/blog/noticias', (Request req) {
-      String? id = req.url.queryParameters['id'];
-      //   _service.save('');
-      return Response.ok('Choveu hoje');
+    router.put('/noticias', (Request req) async {
+      var body = await req.readAsString();
+      var result =
+          await _service.save(NoticiaModel.fromRequest(jsonDecode(body)));
+      return result ? Response(201) : Response(500);
     });
 
     // /blog/noticias?id=1
     //delete
-    router.delete('/blog/noticias', (Request req) {
+    router.delete('/noticias', (Request req) async {
       String? id = req.url.queryParameters['id'];
-      //  _service.delete(1);
-      return Response.ok('Choveu hoje');
+      if (id == null) return Response(400);
+
+      var result = await _service.delete(int.parse(id));
+      return result ? Response(200) : Response(500); //internalServerError
     });
 
     return createHandler(

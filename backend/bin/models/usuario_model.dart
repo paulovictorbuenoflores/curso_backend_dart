@@ -39,7 +39,11 @@ class UsuarioModel {
 
   factory UsuarioModel.fromJson(String source) =>
       UsuarioModel.fromMap(json.decode(source) as Map<String, dynamic>);
-
+  factory UsuarioModel.fromEmail(Map map) {
+    return UsuarioModel()
+      ..id = map['id']?.toInt()
+      ..password = map['password'];
+  }
   @override
   String toString() {
     return 'UsuarioModel(id: $id, nome: $nome, email: $email, isActived: $isActived, dtCreated: $dtCreated, dtUpdated: $dtUpdated)';

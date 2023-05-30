@@ -1,0 +1,44 @@
+use delivery;
+use dart;
+#buscando todas as informacoes * da tabela
+select * from tb_usuarios;
+
+#buscando somente a coluna nome e email da tabela usuarios
+SELECT nome, email FROM tb_ususuariosnoticiasuarios;
+
+#realiza a insercao de 1 usuarios na tabela, informando os campos de nome, email e senha
+INSERT INTO tb_usuarios(nome,email,password) VALUES ('Paulo','pv@gmail.com','12345678');
+INSERT INTO usuarios (nome,email,password) VALUE ('Paulo','pv@gmail.com','123456');
+INSERT INTO usuarios (nome,email,password) VALUE ('Victor','victor@gmail.com','123456');
+UPDATE usuarios set nome = 'PV', password = '123456' where id=1;
+SELECT * FROM usuarios where id=1;
+
+INSERT INTO noticias (titulo, descricao, id_usuario) values ('Noticia Bombastica','Se chove a terra molha',1);
+
+SELECT * FROM noticias;
+
+#buscando todas as informacoes na tabela usuarios onde id corresponda a 2
+SELECT * FROM tb_usuarios WHERE id=2;
+
+#busca todas as informacoes * na tabela usuarios onde a id corresponda a 2 ou nome corresponda a xpto
+SELECT * FROM tb_usuarios WHERE id=2 or nome='xpto';
+#busca todas as informacoes * na tabela usuarios onde a id corresponda a 2 e nome corresponda a xpto
+SELECT * FROM tb_usuarios WHERE id=2 and nome='xpto';
+
+#atualiza na tabela usuarios a coluna Nome e a coluna password com novos valores onde id seja 1
+UPDATE tb_usuarios set nome = 'Paulo', password = '12345678' WHERE id=1;
+
+#apagar na tabela de usuarios onde seja igual a 2
+DELETE from tb_usuarios WHERE id=2; 
+
+
+#juntando 3 tabelas
+select * from tb_vendas v inner join tb_usuarios u on u.id = v.idUsuario 
+inner join tb_produtos p on p.id = v.idProduto
+inner join tb_estabelecimentos e on e.id = p.idEstabelecimento;
+
+SELECT n.titulo,n.descricao, n.dt_autalizacao FROM noticias n INNER JOIN usuarios u on u.id = n.id_usuario;
+SELECT *FROM noticias n INNER JOIN usuarios u on u.id = n.id_usuario;
+SELECT n.titulo as 'Titulo',n.descricao as 'Descricao', n.dt_autalizacao as 'Data Atualizacao', u.nome as 'Autor' FROM noticias n INNER JOIN usuarios u on u.id = n.id_usuario;
+# para realizar a busca de todos os campos da coluna nome que comeca com inicial P
+SELECT n.titulo as 'Titulo',n.descricao as 'Descricao', n.dt_autalizacao as 'Data Atualizacao', u.nome as 'Autor' FROM noticias n INNER JOIN usuarios u on u.id = n.id_usuario WHERE u.nome like 'P%';
